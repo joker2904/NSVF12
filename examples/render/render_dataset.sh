@@ -4,12 +4,12 @@
 # LICENSE file in the root directory of this source tree.
 
 # just for debugging
-DATA="Wineholder"
-RES="200x200"
+DATA="Bike"
+RES="400x400"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
-SAVE=/tmp/roy0/mountpoint/savepoint/$DATA
+SAVE=/tmp/roy0/mountpoint/savepoint/biggerbike2/$DATA
 MODEL=$ARCH$SUFFIX
 MODEL_PATH=$SAVE/$MODEL/checkpoint_last.pt
 

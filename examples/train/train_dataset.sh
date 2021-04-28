@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 # just for debugging
-DATA="Wineholder"
+DATA="Barn"
 RES="200x200"
 ARCH="nsvf_base"
 SUFFIX="v1"
@@ -52,6 +52,7 @@ python train.py ${DATASET} \
     --pruning-every-steps 2500 \
     --keep-interval-updates 5 \
     --log-format simple --log-interval 1 \
+    --save-dir ${SAVE}/${MODEL}
     --tensorboard-logdir ${SAVE}/tensorboard/${MODEL} \
      | tee -a $SAVE/train.log
-    --save-dir ${SAVE}/${MODEL}
+    

@@ -12,18 +12,15 @@ DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
 SAVE=/tmp/roy0/mountpoint/savepoint/$DATA
 MODEL=$ARCH$SUFFIX
 MODEL_PATH=$SAVE/$MODEL/checkpoint_last.pt
+NAME=WINEHOLDERMESH4
 
 # CUDA_VISIBLE_DEVICES=0 \
-python render.py ${DATASET} \
+python extract.py \
     --user-dir fairnr \
-    --task single_object_rendering \
     --path ${MODEL_PATH} \
-    --render-beam 1 \
-    --render-save-fps 24 \
-    --render-camera-poses ${DATASET}/pose \
-    --render-views "200..400" \
-    --model-overrides '{"chunk_size":256,"raymarching_tolerance":0.01}' \
-    --render-resolution $RES \
-    --render-output ${SAVE}/output \
-    --render-output-types "color" "depth" "voxel" "normal" \
-    --render-combine-output --log-format "simple"
+    --output ${SAVE} \
+    --name ${NAME} \
+    --format 'voxel_center' \
+    --mc-threshold 0.5 \
+    --mc-num-samples-per-halfvoxel 5 
+
