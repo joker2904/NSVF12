@@ -42,6 +42,8 @@ def main(args):
         plydata = model.encoder.export_voxels(False)
     elif args.format == 'voxel_mesh':
         plydata = model.encoder.export_voxels(True)
+    elif args.format == 'voxel_color':
+        plydata = model.encoder.export_voxelcolors()
     else:
         raise NotImplementedError
 
@@ -57,7 +59,7 @@ def cli_main():
     parser.add_argument('--path', type=str, required=True)
     parser.add_argument('--output', type=str, required=True)
     parser.add_argument('--name', type=str, default='sparsevoxel')
-    parser.add_argument('--format', type=str, choices=['voxel_center', 'voxel_mesh', 'mc_mesh'])
+    parser.add_argument('--format', type=str, choices=['voxel_center', 'voxel_mesh', 'mc_mesh','voxel_color'])
     parser.add_argument('--savetext', action='store_true', help='save .ply in plain text')
     parser.add_argument('--mc-num-samples-per-halfvoxel', type=int, default=8,
                         help="""the number of point samples every half voxel-size for marching cube. 

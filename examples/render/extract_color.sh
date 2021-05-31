@@ -12,7 +12,7 @@ DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
 SAVE=/tmp/roy0/mountpoint/savepoint/$DATA
 MODEL=$ARCH$SUFFIX
 MODEL_PATH=$SAVE/$MODEL/checkpoint_last.pt
-NAME=WINEHOLDERMESH5
+NAME=VoxelColor
 
 # CUDA_VISIBLE_DEVICES=0 \
 python extract.py \
@@ -20,7 +20,7 @@ python extract.py \
     --path ${MODEL_PATH} \
     --output ${SAVE} \
     --name ${NAME} \
-    --format 'voxel_mesh' \
+    --format 'voxel_color' \
     --mc-threshold 0.5 \
     --mc-num-samples-per-halfvoxel 5 
 

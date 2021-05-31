@@ -454,6 +454,30 @@ class SparseVoxelEncoder(Encoder):
             return PlyData([PlyElement.describe(vertex, 'vertex'), PlyElement.describe(face, 'face')])
 
     @torch.no_grad()
+    def export_voxelcolors(self):
+        logger.info("exporting learned sparse voxels...")
+        voxel_idx = torch.arange(self.keep.size(0), device=self.keep.device)
+        voxel_idx = voxel_idx[self.keep.bool()]
+        voxel_pts = self.points[self.keep.bool()]
+        '''
+        points = [
+                (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
+                for k in range(voxel_idx.size(0))
+            ]
+        '''
+        nvalues = voxel_idx.size(0)
+        points = []
+        for k in range(nvalues):
+         if k < nvalues/2:
+           points.append( (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 0) )
+         else:
+           points.append( (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 0, 255, 0) )
+		
+        vertex = np.array(points, dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4'), ('red', 'u1'), ('blue', 'u1'), ('green', 'u1')])
+        return PlyData([PlyElement.describe(vertex, 'vertex')])
+        
+
+    @torch.no_grad()
     def export_surfaces(self, field_fn, th, bits):
         """
         extract triangle-meshes from the implicit field using marching cube algorithm
