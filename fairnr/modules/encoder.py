@@ -702,7 +702,7 @@ class SparseVoxelEncoder(Encoder):
 
         self.points = new_points
         self.feats = new_feats
-        self.pointcolors = self.points
+        #self.pointcolors = self.points
         self.keep = self.keep.new_ones(new_point_length)
         logger.info("splitting done. # of voxels before: {}, after: {} voxels".format(points.size(0), self.keep.sum()))
         
