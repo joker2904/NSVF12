@@ -283,6 +283,7 @@ class SparseVoxelEncoder(Encoder):
         
         # register parameters (will be saved to checkpoints)
         self.register_buffer("points", fine_points)          # voxel centers
+        self.register_buffer("pointcolors", fine_points)          # voxel centers
         self.register_buffer("keys", fine_keys.long())       # id used to find voxel corners/embeddings
         self.register_buffer("feats", fine_feats.long())     # for each voxel, 8 voxel corner ids
         self.register_buffer("num_keys", num_keys)
@@ -322,12 +323,14 @@ class SparseVoxelEncoder(Encoder):
         
         if self.voxel_index is not None:
             state_dict[name + '.points'] = state_dict[name + '.points'][self.voxel_index]
+            state_dict[name + '.pointcolors'] = state_dict[name + '.pointcolors'][self.voxel_index]
             state_dict[name + '.feats'] = state_dict[name + '.feats'][self.voxel_index]
             state_dict[name + '.keep'] = state_dict[name + '.keep'][self.voxel_index]
         
         # update the buffers shapes
         if name + '.points' in state_dict:
             self.points = self.points.new_zeros(*state_dict[name + '.points'].size())
+            self.pointcolors = self.points.new_zeros(*state_dict[name + '.pointcolors'].size())
             self.feats  = self.feats.new_zeros(*state_dict[name + '.feats'].size())
             self.keys   = self.keys.new_zeros(*state_dict[name + '.keys'].size())
             self.keep   = self.keep.new_zeros(*state_dict[name + '.keep'].size())
@@ -336,6 +339,7 @@ class SparseVoxelEncoder(Encoder):
             # this usually happens when loading a NeRF checkpoint to NSVF
             # use initialized values
             state_dict[name + '.points'] = self.points
+            state_dict[name + '.pointcolors'] = self.pointcolors
             state_dict[name + '.feats'] = self.feats
             state_dict[name + '.keys'] = self.keys
             state_dict[name + '.keep'] = self.keep
@@ -459,6 +463,7 @@ class SparseVoxelEncoder(Encoder):
         voxel_idx = torch.arange(self.keep.size(0), device=self.keep.device)
         voxel_idx = voxel_idx[self.keep.bool()]
         voxel_pts = self.points[self.keep.bool()]
+        voxel_colors = self.pointcolors[self.keep.bool()]
         '''
         points = [
                 (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
