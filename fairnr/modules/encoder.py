@@ -463,7 +463,7 @@ class SparseVoxelEncoder(Encoder):
         voxel_idx = torch.arange(self.keep.size(0), device=self.keep.device)
         voxel_idx = voxel_idx[self.keep.bool()]
         voxel_pts = self.points[self.keep.bool()]
-        voxel_colors = self.pointcolors[self.keep.bool()]
+        voxel_colors = self.pointcolors #[self.keep.bool()]
         '''
         points = [
                 (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
