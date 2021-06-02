@@ -687,8 +687,8 @@ class SparseVoxelEncoder(Encoder):
     def splitting(self):
         logger.info("splitting...")
         encoder_states = self.precompute(id=None)
-        print('point length before:',points.shape)
         feats, points, values = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb']
+        print('point length before:',points.shape)
         new_points, new_feats, new_values, new_keys = splitting_points(points, feats, values, self.voxel_size / 2.0)
         new_num_keys = new_keys.size(0)
         new_point_length = new_points.size(0)
