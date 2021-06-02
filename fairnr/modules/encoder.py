@@ -463,7 +463,7 @@ class SparseVoxelEncoder(Encoder):
         voxel_idx = torch.arange(self.keep.size(0), device=self.keep.device)
         voxel_idx = voxel_idx[self.keep.bool()]
         voxel_pts = self.points[self.keep.bool()]
-        voxel_colors = self.pointcolors #[self.keep.bool()]
+        voxel_colors = self.pointcolors[self.keep.bool()]
         print(voxel_colors,voxel_colors.shape)
         '''
         points = [
@@ -702,6 +702,7 @@ class SparseVoxelEncoder(Encoder):
 
         self.points = new_points
         self.feats = new_feats
+        self.pointcolors = new_points
         self.keep = self.keep.new_ones(new_point_length)
         logger.info("splitting done. # of voxels before: {}, after: {} voxels".format(points.size(0), self.keep.sum()))
         
