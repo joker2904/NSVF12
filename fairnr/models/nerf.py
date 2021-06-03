@@ -56,7 +56,7 @@ class NeRFModel(BaseModel):
         with with_torch_seed(self.unique_seed):  # make sure each GPU sample differently.
             samples = self.encoder.ray_sample(intersection_outputs)
         field = self.field_fine if fine and (self.field_fine is not None) else self.field 
-        print(intersection_outputs['intersected_voxel_idx'].shape,sample['sampled_point_voxel_idx'].shape)
+        print(intersection_outputs['intersected_voxel_idx'].shape,samples['sampled_point_voxel_idx'].shape)
         all_results = self.raymarcher(
             self.encoder, field, ray_start, ray_dir, samples, encoder_states
         )
