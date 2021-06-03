@@ -612,7 +612,7 @@ class SparseVoxelEncoder(Encoder):
 
         if values is not None:
             # resample point features
-            print(sampled_idx.shape, point_xyz.shape)
+            print(samples['sampled_point_voxel_idx'].shape,sampled_idx.shape, point_xyz.shape)
             point_xyz = F.embedding(sampled_idx, point_xyz)
             point_feats = F.embedding(F.embedding(sampled_idx, point_feats), values).view(point_xyz.size(0), -1)
 
