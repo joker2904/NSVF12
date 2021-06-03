@@ -234,7 +234,6 @@ class SparseVoxelEncoder(Encoder):
 
                     # indexing voxel vertices
                     fine_points = torch.unique(fine_points, dim=0)
-
                     # vertex_ids, _ = discretize_points(fine_points, voxel_size)
                     # vertex_ids_offset = vertex_ids + 1
                     
@@ -281,9 +280,10 @@ class SparseVoxelEncoder(Encoder):
         else:
             step_size = args.raymarching_stepsize
         
+        colors = torch.zeros(fine_points.shape[0],1)
         # register parameters (will be saved to checkpoints)
         self.register_buffer("points", fine_points)          # voxel centers
-        self.register_buffer("pointcolors", fine_points)          # voxel centers
+        self.register_buffer("pointcolors", colors)          # voxel color labels
         self.register_buffer("keys", fine_keys.long())       # id used to find voxel corners/embeddings
         self.register_buffer("feats", fine_feats.long())     # for each voxel, 8 voxel corner ids
         self.register_buffer("num_keys", num_keys)
@@ -313,6 +313,7 @@ class SparseVoxelEncoder(Encoder):
             self.values = shared_values
 
     def upgrade_state_dict_named(self, state_dict, name):
+        print('entered upgrade_state_dict_named')
         # update the voxel embedding shapes
         if self.values is not None:
             loaded_values = state_dict[name + '.values.weight']
@@ -330,7 +331,7 @@ class SparseVoxelEncoder(Encoder):
         # update the buffers shapes
         if name + '.points' in state_dict:
             self.points = self.points.new_zeros(*state_dict[name + '.points'].size())
-            self.pointcolors = self.points.new_zeros(*state_dict[name + '.pointcolors'].size())
+            self.pointcolors = self.pointcolors.new_zeros(*state_dict[name + '.pointcolors'].size())
             self.feats  = self.feats.new_zeros(*state_dict[name + '.feats'].size())
             self.keys   = self.keys.new_zeros(*state_dict[name + '.keys'].size())
             self.keep   = self.keep.new_zeros(*state_dict[name + '.keep'].size())
@@ -688,11 +689,9 @@ class SparseVoxelEncoder(Encoder):
         logger.info("splitting...")
         encoder_states = self.precompute(id=None)
         feats, points, values = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb']
-        print('point length before:',points.shape)
         new_points, new_feats, new_values, new_keys = splitting_points(points, feats, values, self.voxel_size / 2.0)
         new_num_keys = new_keys.size(0)
-        new_point_length = new_points.size(0)
-        print('point length after:',points.shape)
+        new_point_length = new_points.size(0)        
         # set new voxel embeddings
         if new_values is not None:
             self.values.weight = nn.Parameter(new_values)
