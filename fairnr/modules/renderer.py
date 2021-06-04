@@ -131,6 +131,8 @@ class VolumeRenderer(Renderer):
             outputs['normal'] = masked_scatter(sample_mask, field_outputs['normal'])
         if 'feat_n2' in field_outputs:
             outputs['feat_n2'] = masked_scatter(sample_mask, field_outputs['feat_n2'])
+            
+        outputs['originalpoints'] = field_outputs['originalpoints']
         return outputs, sample_mask.sum()
 
     def forward_chunk(
