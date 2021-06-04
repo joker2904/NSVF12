@@ -624,7 +624,7 @@ class SparseVoxelEncoder(Encoder):
             p = ((sampled_xyz - point_xyz) / self.voxel_size + .5).unsqueeze(1)
             q = offset_points(p, .5, offset_only=True).unsqueeze(0) + .5   # BUG (FIX)
             #print('interp: ',trilinear_interp(p, q, point_feats).shape)
-            inputs.update({'emb': trilinear_interp(p, q, point_feats)})
+            inputs.update({'emb': trilinear_interp(p, q, point_feats),'originalpoints':points_xyz})
 
         return inputs
 
