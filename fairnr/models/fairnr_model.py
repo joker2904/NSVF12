@@ -137,6 +137,7 @@ class BaseModel(BaseFairseqModel):
                 else results[w] 
             for w in results
         }
+        print('results--> ',results['colors'].shape,results['originalpoints'].shape)
         return results
 
     def _forward(self, ray_start, ray_dir, **kwargs):
