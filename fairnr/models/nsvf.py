@@ -78,7 +78,7 @@ class NSVFModel(NeRFModel):
         samples, all_results = super().raymarching(ray_start, ray_dir, intersection_outputs, encoder_states, fine)
         all_results['voxel_edges'] = self.encoder.get_edge(ray_start, ray_dir, samples, encoder_states)
         all_results['voxel_depth'] = samples['sampled_point_depth'][:, 0]
-        print(intersection_outputs['intersected_voxel_idx'].shape,all_results['colors'].shape,samples['sampled_point_depth'].shape,samples['sampled_point_voxel_idx'].shape)
+        print('after-->',intersection_outputs['intersected_voxel_idx'].shape,all_results['colors'].shape,samples['sampled_point_depth'].shape,samples['sampled_point_voxel_idx'].shape)
         return samples, all_results
 
     def prepare_hierarchical_sampling(self, intersection_outputs, samples, all_results):
