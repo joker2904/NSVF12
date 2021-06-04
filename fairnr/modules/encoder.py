@@ -621,7 +621,7 @@ class SparseVoxelEncoder(Encoder):
             #tpt_sampled_xyz = torch.unique(sampled_xyz,dim=0)
             #print(tpt.shape,tpt_point_xyz.shape,tpt_sampled_xyz.shape, sampled_idx.shape,point_xyz.shape)
             # tri-linear interpolation
-            self.currentpoints = points_xyz
+            self.currentpoints = point_xyz
             p = ((sampled_xyz - point_xyz) / self.voxel_size + .5).unsqueeze(1)
             q = offset_points(p, .5, offset_only=True).unsqueeze(0) + .5   # BUG (FIX)
             #print('interp: ',trilinear_interp(p, q, point_feats).shape)
