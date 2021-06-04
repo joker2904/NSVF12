@@ -277,7 +277,7 @@ class RaidanceField(Field):
                 inputs['texture'] = torch.sigmoid(inputs['texture'])
             print('voxel inputs --->')
             for k in inputs:
-                print(k)
+                print(k,inputs[k].shape)
         return inputs
 
 
