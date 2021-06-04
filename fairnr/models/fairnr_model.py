@@ -184,6 +184,7 @@ class BaseModel(BaseFairseqModel):
             all_results['sampled_uv'] = sampled_uv
         
         all_results['other_logs'] = self.add_other_logs(all_results)
+        print('fairnr results--> ',all_results['colors'].shape,all_results['originalpoints'].shape)
         return all_results
 
     def preprocessing(self, **kwargs):
