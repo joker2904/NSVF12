@@ -615,7 +615,7 @@ class SparseVoxelEncoder(Encoder):
             #print('in encoder-->',samples['sampled_point_depth'].shape,samples['sampled_point_voxel_idx'].shape)
             point_xyz = F.embedding(sampled_idx, point_xyz)
             point_feats = F.embedding(F.embedding(sampled_idx, point_feats), values).view(point_xyz.size(0), -1)
-            #print('in encoder2-->',sampled_xyz.shape,point_xyz.shape)
+            print('in encoder2-->',sampled_idx.shape,sampled_xyz.shape,point_xyz.shape)
             #tpt = torch.unique(sampled_idx,dim=0)
             #tpt_point_xyz = torch.unique(point_xyz,dim=0)
             #tpt_sampled_xyz = torch.unique(sampled_xyz,dim=0)
