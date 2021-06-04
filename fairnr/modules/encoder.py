@@ -630,8 +630,12 @@ class SparseVoxelEncoder(Encoder):
         return inputs
 
     @torch.no_grad()
+    def putcolor(self, voxel_idxs, colors):
+        print('voxel pros->',voxel_idxs.shape,colors.shape)
+        
+    @torch.no_grad()
     def track_voxel_probs(self, voxel_idxs, voxel_probs):
-        print('voxel pros->',voxel_idxs.shape,voxel_probs.shape)
+        #print('voxel pros->',voxel_idxs.shape,voxel_probs.shape)
         voxel_idxs = voxel_idxs.masked_fill(voxel_idxs.eq(-1), self.max_voxel_probs.size(0))
         chunk_size = 4096
         for start in range(0, voxel_idxs.size(0), chunk_size):
