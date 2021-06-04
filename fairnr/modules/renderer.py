@@ -100,6 +100,7 @@ class VolumeRenderer(Renderer):
         samples = {name: s[sample_mask] for name, s in samples.items()}
        
         # get encoder features as inputs
+        print('samples idx -->',samples['sampled_point_voxel_idx'].shape)
         field_inputs = input_fn(samples, encoder_states)
         
         # forward implicit fields
