@@ -229,7 +229,8 @@ class VolumeRenderer(Renderer):
         if 'feat_n2' in outputs:
             results['feat_n2'] = (outputs['feat_n2'] * probs).sum(-1)
             results['regz-term'] = outputs['feat_n2'][sampled_idx.ne(-1)]
-            
+        
+        results['originalpoints'] = outputs['originalpoints']
         return results
 
     def forward(self, input_fn, field_fn, ray_start, ray_dir, samples, *args, **kwargs):

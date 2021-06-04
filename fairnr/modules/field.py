@@ -276,8 +276,8 @@ class RaidanceField(Field):
             if self.min_color == 0:
                 inputs['texture'] = torch.sigmoid(inputs['texture'])
             print('voxel inputs --->')
-            for k in inputs:
-                print(k,inputs[k].shape)
+            #for k in inputs:
+            #    print(k,inputs[k].shape)
             
         return inputs
 
