@@ -175,6 +175,7 @@ class VolumeRenderer(Renderer):
                             hits[early_stop] *= 0
                     
                     for key in _outputs:
+                        print('_outputs -->',key)
                         outputs[key] += [_outputs[key]]
                 else:
                     for key in outputs:
@@ -190,7 +191,9 @@ class VolumeRenderer(Renderer):
 
         outputs = {key: torch.cat(outputs[key], 1) for key in outputs}
         results = {}
-        
+        print('keys -->')
+        for key in outputs:
+            print(key,outputs[key].shape)
         if 'free_energy' in outputs:
             free_energy = outputs['free_energy']
             shifted_free_energy = torch.cat([free_energy.new_zeros(sampled_depth.size(0), 1), free_energy[:, :-1]], dim=-1)  # shift one step
@@ -230,7 +233,7 @@ class VolumeRenderer(Renderer):
             results['feat_n2'] = (outputs['feat_n2'] * probs).sum(-1)
             results['regz-term'] = outputs['feat_n2'][sampled_idx.ne(-1)]
         
-        results['originalpoints'] = outputs['originalpoints']
+        #results['originalpoints'] = outputs['originalpoints']
         return results
 
     def forward(self, input_fn, field_fn, ray_start, ray_dir, samples, *args, **kwargs):
