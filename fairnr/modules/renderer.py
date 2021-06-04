@@ -134,7 +134,7 @@ class VolumeRenderer(Renderer):
         if 'originalpoints' in field_outputs:
             outputs['originalpoints'] = masked_scatter(sample_mask, field_outputs['originalpoints'])
 
-        print('key of field output value-->')
+        #print('key of field output value-->')
         #for k in field_outputs:
         #    print(k,field_outputs[k].shape)
         #outputs['originalpoints'] = field_outputs['originalpoints']
@@ -182,7 +182,7 @@ class VolumeRenderer(Renderer):
                             hits[early_stop] *= 0
                     
                     for key in _outputs:
-                        print('_outputs -->',key)
+                        #print('_outputs -->',key)
                         outputs[key] += [_outputs[key]]
                 else:
                     for key in outputs:
@@ -198,9 +198,9 @@ class VolumeRenderer(Renderer):
 
         outputs = {key: torch.cat(outputs[key], 1) for key in outputs}
         results = {}
-        print('keys -->')
-        for key in outputs:
-            print(key,outputs[key].shape)
+        #print('keys -->')
+        #for key in outputs:
+        #    print(key,outputs[key].shape)
         if 'free_energy' in outputs:
             free_energy = outputs['free_energy']
             shifted_free_energy = torch.cat([free_energy.new_zeros(sampled_depth.size(0), 1), free_energy[:, :-1]], dim=-1)  # shift one step
@@ -239,8 +239,10 @@ class VolumeRenderer(Renderer):
         if 'feat_n2' in outputs:
             results['feat_n2'] = (outputs['feat_n2'] * probs).sum(-1)
             results['regz-term'] = outputs['feat_n2'][sampled_idx.ne(-1)]
-        
-        #results['originalpoints'] = outputs['originalpoints']
+
+        if 'originalpoints' in outputs:
+            results['originalpoints'] = (outputs['originalpoints'] * probs.unsqueeze(-1)).sum(-2)
+
         return results
 
     def forward(self, input_fn, field_fn, ray_start, ray_dir, samples, *args, **kwargs):
@@ -262,8 +264,8 @@ class VolumeRenderer(Renderer):
 
         if getattr(input_fn, "track_max_probs", False) and (not self.training):
             input_fn.track_voxel_probs(samples['sampled_point_voxel_idx'].long(), results['probs'])
-        #input_fn.putcolor(samples['sampled_point_voxel_idx'].long(), results['colors'])
-        #print('col--> ',results['colors'].shape,samples['sampled_point_voxel_idx'].shape)
+
+        print('col--> ',results['colors'].shape,results['originalpoints'].shape,samples['sampled_point_voxel_idx'].shape)
         #print('end rendering')
         return results
 
