@@ -233,7 +233,7 @@ class VolumeRenderer(Renderer):
         return results
 
     def forward(self, input_fn, field_fn, ray_start, ray_dir, samples, *args, **kwargs):
-        print('start rendering')
+        #print('start rendering')
         chunk_size = self.chunk_size if self.training else self.valid_chunk_size
         if ray_start.size(0) <= chunk_size:
             results = self.forward_chunk(input_fn, field_fn, ray_start, ray_dir, samples, *args, **kwargs)
@@ -253,7 +253,7 @@ class VolumeRenderer(Renderer):
             input_fn.track_voxel_probs(samples['sampled_point_voxel_idx'].long(), results['probs'])
         #input_fn.putcolor(samples['sampled_point_voxel_idx'].long(), results['colors'])
         #print('col--> ',results['colors'].shape,samples['sampled_point_voxel_idx'].shape)
-        print('end rendering')
+        #print('end rendering')
         return results
 
 
