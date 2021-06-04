@@ -149,7 +149,7 @@ class VolumeRenderer(Renderer):
         early_stop = None
         if tolerance > 0:
             tolerance = -math.log(tolerance)
-        print('samples in forward chunk-->',sampled_idx.shape)
+        #print('samples in forward chunk-->',sampled_idx.shape)
         hits = sampled_idx.ne(-1).long()
         outputs = defaultdict(lambda: [])
         size_so_far, start_step = 0, 0
