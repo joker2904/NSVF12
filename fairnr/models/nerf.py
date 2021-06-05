@@ -87,6 +87,8 @@ class NeRFModel(BaseModel):
         all_results['missed'] = all_results['missed'].view(S, V, P)
         all_results['colors'] = all_results['colors'].view(S, V, P, 3)
         all_results['depths'] = all_results['depths'].view(S, V, P)
+        all_results['originalpoints'] = all_results['originalpoints'].view(S, V, P, 3)
+
         if 'z' in all_results:
             all_results['z'] = all_results['z'].view(S, V, P)
 
@@ -94,6 +96,8 @@ class NeRFModel(BaseModel):
         bg_color = self.field.bg_color(all_results['colors'])
         all_results['colors'] += all_results['missed'].unsqueeze(-1) * bg_color.reshape(fullsize, 3).view(S, V, P, 3)
         all_results['depths'] += all_results['missed'] * BG_DEPTH
+        all_results['originalpoints'] += all_results['missed'].unsqueeze(-1).view(S, V, P, 3)
+        
         if 'normal' in all_results:
             all_results['normal'] = all_results['normal'].view(S, V, P, 3)
         return all_results
