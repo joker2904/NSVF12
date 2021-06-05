@@ -59,7 +59,7 @@ class NeRFModel(BaseModel):
         all_results = self.raymarcher(
             self.encoder, field, ray_start, ray_dir, samples, encoder_states
         )
-        print('nerf results--> ',all_results['colors'].shape,all_results['originalpoints'].shape)
+        #print('nerf results--> ',all_results['colors'].shape,all_results['originalpoints'].shape)
         return samples, all_results
 
     def prepare_hierarchical_sampling(self, intersection_outputs, samples, all_results):

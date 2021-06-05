@@ -137,7 +137,7 @@ class BaseModel(BaseFairseqModel):
                 else results[w] 
             for w in results
         }
-        print('results--> ',results['colors'].shape,results['originalpoints'].shape)
+        #print('results--> ',results['colors'].shape,results['originalpoints'].shape)
         return results
 
     def _forward(self, ray_start, ray_dir, **kwargs):
@@ -184,7 +184,7 @@ class BaseModel(BaseFairseqModel):
             all_results['sampled_uv'] = sampled_uv
         
         all_results['other_logs'] = self.add_other_logs(all_results)
-        print('fairnr results--> ',all_results['colors'].shape,all_results['originalpoints'].shape)
+        #print('fairnr results--> ',all_results['colors'].shape,all_results['originalpoints'].shape)
         return all_results
 
     def preprocessing(self, **kwargs):
@@ -275,6 +275,13 @@ class BaseModel(BaseFairseqModel):
         if 'normal' in output and output['normal'] is not None:
             images['{}_predn/{}:HWC'.format(name, img_id)] = {
                 'img': output['normal'][shape, view], 'min_val': -1, 'max_val': 1}
+
+        if 'originalpoints' in output and output['originalpoints'] is not None:
+            images['{}_point/{}'.format(name, img_id)] = {
+                 'img': torch.cat(
+                     [output['originalpoints'][shape, view],
+                      (output['colors'][shape, view] - self.args.min_color) / (1 - self.args.min_color)], 1),   # XYZRGB
+                 'raw': True }
         return images
 
     def add_eval_scores(self, logging_output, sample, output, criterion, scores=['ssim', 'psnr', 'lpips'], outdir=None):
