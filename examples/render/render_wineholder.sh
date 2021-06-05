@@ -25,5 +25,5 @@ python render.py ${DATASET} \
     --model-overrides '{"chunk_size":256,"raymarching_tolerance":0.01}' \
     --render-resolution $RES \
     --render-output ${SAVE}/output \
-    --render-output-types "color" "depth" "voxel" "normal" \
+    --render-output-types "color" "point" \
     --render-combine-output --log-format "simple"
