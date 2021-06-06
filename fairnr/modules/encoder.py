@@ -632,11 +632,12 @@ class SparseVoxelEncoder(Encoder):
     def check_relevantcolor(self, voxels, colors):
         encoder_states = self.precompute()
         points = encoder_states['voxel_center_xyz']
-        check = torch.eq(voxels, points)
-        a = torch.mul(check[:,0],check[:,1])
-        a = torch.mul(a,check[:,2])
+        colorvoxel = torch.cat((voxels, colors),axis=1)
+        val = torch.tensor.zeros((voxels.shape[0],1))
+        for index in voxels.shape[0]:
+            val[index,0] = torch.eq(voxels[index,:], points)
+        print(val,val.shape)
         #print(check,check.shape,voxels.shape, colors.shape)
-        print(a,a.shape)
         #print('voxel colors->',voxels.shape,colors.shape,points.shape)
 
     @torch.no_grad()
