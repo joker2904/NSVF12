@@ -265,6 +265,7 @@ class VolumeRenderer(Renderer):
         if getattr(input_fn, "track_max_probs", False) and (not self.training):
             input_fn.track_voxel_probs(samples['sampled_point_voxel_idx'].long(), results['probs'])
 
+        input_fn.check_relevantcolor(results['originalpoints'],results['colors'])
         #print('col--> ',results['colors'].shape,results['originalpoints'].shape,samples['sampled_point_voxel_idx'].shape)
         #print('end rendering')
         return results
