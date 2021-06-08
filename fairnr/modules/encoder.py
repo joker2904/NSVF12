@@ -645,7 +645,8 @@ class SparseVoxelEncoder(Encoder):
     @torch.no_grad()
     def exportcolor(self):
         #print(self.pointcol.shape)
-        points = self.pointcol.numpy()
+        points = self.pointcol.cpu()
+        points = points.numpy()
         vertex = np.array(points, dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4'), ('red', 'u1'), ('blue', 'u1'), ('green', 'u1')])
         return PlyData([PlyElement.describe(vertex, 'vertex')])
 
