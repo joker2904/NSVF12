@@ -636,7 +636,7 @@ class SparseVoxelEncoder(Encoder):
         val = torch.zeros((voxels.shape[0],1))
         for index in range(voxels.shape[0]):
             #val[index][0] = 
-            p = torch.eq(voxels[index,:], points)
+            p = torch.eq(voxels[index,:], points)[index,:]
             print(p,p.shape)
         #print(check,check.shape,voxels.shape, colors.shape)
         #print('voxel colors->',voxels.shape,colors.shape,points.shape)
