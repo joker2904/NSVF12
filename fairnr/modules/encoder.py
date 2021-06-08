@@ -280,7 +280,7 @@ class SparseVoxelEncoder(Encoder):
         else:
             step_size = args.raymarching_stepsize
         
-        colors = torch.zeros(fine_points.shape[0],1)
+        colors = torch.zeros(fine_points.shape[0],6)
         # register parameters (will be saved to checkpoints)
         self.register_buffer("points", fine_points)          # voxel centers
         self.register_buffer("pointcolors", colors)          # voxel color labels
@@ -634,7 +634,14 @@ class SparseVoxelEncoder(Encoder):
         points = encoder_states['voxel_center_xyz']
         colorvoxel = torch.cat((voxels, colors),axis=1)
         val = colorvoxel[(voxels[:, None] == points).all(-1).any(-1),:]
-        print('voxel colors->',voxels.shape,points.shape,val.shape)
+        #print('voxel colors->',voxels.shape,points.shape,val.shape)
+        if self.pointcol is None:
+            self.pointcol = val
+        else:
+            self.pointcol = torch.cat((self.pointcol,val),axis=1)
+        print(self.pointcol.shape)
+
+        return val
 
     @torch.no_grad()
     def track_voxel_probs(self, voxel_idxs, voxel_probs):
