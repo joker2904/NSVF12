@@ -28,5 +28,4 @@ python render.py ${DATASET} \
     --render-output ${SAVE}/output \
     --render-output-types "color" "point" \
     --render-combine-output --log-format "simple"\
-    --output ${SAVE} \
-    --name ${NAME} 
+
