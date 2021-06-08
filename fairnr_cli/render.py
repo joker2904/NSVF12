@@ -111,6 +111,12 @@ def _main(args, output_file):
             #     break
 
     generator.save_images(output_files, combine_output=args.render_combine_output)
+    plydata = model.encoder.exportcolor()
+    # write to ply file.
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
+    plydata.text = args.savetext
+    plydata.write(open(os.path.join(args.output, args.name + '.ply'), 'wb'))
 
 def cli_main():
     parser = options.get_rendering_parser()

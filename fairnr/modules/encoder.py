@@ -639,9 +639,14 @@ class SparseVoxelEncoder(Encoder):
             self.pointcol = val
         else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
-        print(self.pointcol.shape)
-
+        #print(self.pointcol.shape,points.shape)
         return val
+
+    @torch.no_grad()
+    def exportcolor(self):
+        #print(self.pointcol.shape)
+        vertex = np.array(self.pointcol, dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4'), ('red', 'u1'), ('blue', 'u1'), ('green', 'u1')])
+        return PlyData([PlyElement.describe(vertex, 'vertex')])
 
     @torch.no_grad()
     def track_voxel_probs(self, voxel_idxs, voxel_probs):
