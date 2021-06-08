@@ -633,7 +633,7 @@ class SparseVoxelEncoder(Encoder):
         encoder_states = self.precompute()
         points = encoder_states['voxel_center_xyz']
         colorvoxel = torch.cat((voxels, colors),axis=1)
-        val = (voxels[:, None] == points).all(-1).any(-1)
+        val = colorvoxel[(voxels[:, None] == points).all(-1).any(-1),:]
         print('voxel colors->',voxels.shape,points.shape,val.shape)
 
     @torch.no_grad()
