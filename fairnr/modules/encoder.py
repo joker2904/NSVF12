@@ -211,7 +211,7 @@ class SparseVoxelEncoder(Encoder):
             "at least initial bounding box or pretrained voxel files are required."
         self.voxel_index = None
         self.scene_scale = getattr(args, "scene_scale", 1.0)
-
+        self.pointcol = None
         if self.voxel_path is not None:
             # read voxel file
             assert os.path.exists(self.voxel_path), "voxel file must exist"
