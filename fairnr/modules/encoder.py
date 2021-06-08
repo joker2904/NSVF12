@@ -638,7 +638,7 @@ class SparseVoxelEncoder(Encoder):
         if self.pointcol is None:
             self.pointcol = val
         else:
-            self.pointcol = torch.cat((self.pointcol,val),axis=1)
+            self.pointcol = torch.cat((self.pointcol,val),axis=0)
         print(self.pointcol.shape)
 
         return val
