@@ -116,7 +116,16 @@ def _main(args, output_file):
             gen_timer.stop(500)
             wps_meter.update(500)
             t.log({'wps': round(wps_meter.avg)})
-            
+
+    # save the pointcloud data for experimentation
+    plydata = model.encoder.exportcolor()
+    # write to ply file.
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
+    plydata.text = args.savetext
+    print('plypath-->',args.output, args.name,args.savetext)
+    plydata.write(open(os.path.join(args.output, args.name + '.ply'), 'wb'))
+
     timestamp = generator.save_images(
         output_files, steps='shard{}'.format(shard_id), combine_output=args.render_combine_output)
 
@@ -128,14 +137,8 @@ def _main(args, output_file):
 
     if shard_id == 0:
         generator.merge_videos(timestamps)
-        
-    plydata = model.encoder.exportcolor()
-    # write to ply file.
-    if not os.path.exists(args.output):
-        os.makedirs(args.output)
-    plydata.text = args.savetext
-    print('plypath-->',args.output, args.name,args.savetext)
-    plydata.write(open(os.path.join(args.output, args.name + '.ply'), 'wb'))
+
+
 def cli_main():
     parser = options.get_rendering_parser()
     add_distributed_training_args(parser)
