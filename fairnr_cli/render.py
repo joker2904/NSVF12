@@ -116,6 +116,7 @@ def _main(args, output_file):
     if not os.path.exists(args.output):
         os.makedirs(args.output)
     plydata.text = args.savetext
+    print('plypath-->',args.output, args.name,args.savetext)
     plydata.write(open(os.path.join(args.output, args.name + '.ply'), 'wb'))
 
 def cli_main():
