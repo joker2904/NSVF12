@@ -12,6 +12,7 @@ DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
 SAVE=/tmp/roy0/mountpoint/savepoint/$DATA
 MODEL=$ARCH$SUFFIX
 MODEL_PATH=$SAVE/$MODEL/checkpoint_last.pt
+NAME=VoxelColorRender
 
 # CUDA_VISIBLE_DEVICES=0 \
 python render.py ${DATASET} \
@@ -26,4 +27,6 @@ python render.py ${DATASET} \
     --render-resolution $RES \
     --render-output ${SAVE}/output \
     --render-output-types "color" "point" \
-    --render-combine-output --log-format "simple"
+    --render-combine-output --log-format "simple"\
+    --output ${SAVE} \
+    --name ${NAME} 
