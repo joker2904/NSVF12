@@ -290,6 +290,10 @@ def write_images(writer, images, updates):
     for tag in images:
         img = images[tag]
         tag, dataform = tag.split(':')
+        if dataform == 'pointcloud':
+            continue
+        else:
+            writer.add_image(tag, img, updates, dataformats=dataform)
         writer.add_image(tag, img, updates, dataformats=dataform)
 
 
