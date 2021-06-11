@@ -278,11 +278,12 @@ class BaseModel(BaseFairseqModel):
                 'img': output['normal'][shape, view], 'min_val': -1, 'max_val': 1}
 
         if 'originalpoints' in output and output['originalpoints'] is not None:
+            colpoints = torch.cat( [output['originalpoints'][shape, view], (output['colors'][shape, view] - self.args.min_color) / (1 - self.args.min_color)], 1)
+            print('final colored points :',colpoints.shape)
             images['{}_point/{}:pointcloud'.format(name, img_id)] = {
-                 'img': torch.cat(
-                     [output['originalpoints'][shape, view],
-                      (output['colors'][shape, view] - self.args.min_color) / (1 - self.args.min_color)], 1),   # XYZRGB
+                 'img': colpoints,   # XYZRGB
                  'raw': True }
+            
         return images
 
     def add_eval_scores(self, logging_output, sample, output, criterion, scores=['ssim', 'psnr', 'lpips'], outdir=None):
