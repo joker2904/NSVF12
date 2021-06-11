@@ -661,12 +661,22 @@ class SparseVoxelEncoder(Encoder):
         print(self.pointcol.shape,val.shape,voxels.shape,colors.shape)
 
     @torch.no_grad()
-    def white_color_separate(self, colorvoxels):
+    def cat_whitecolor(self, voxels, colors,min):
         white = torch.tensor([[255,255,255]])
-        voxels = colorvoxels[:,:3]
-        colors = colorvoxels[:,3:]
-        p = torch.tensor(colors[:, None] == white).all(-1).any(-1)
-        print('tempcol--->',p) 
+        voxels = voxels[0][0]
+        colors = colors[0][0]
+        colors = (colors - min)/min
+        #print(min,voxels.shape,colors.shape)
+        colorvoxel = torch.cat((voxels, colors),axis=1)
+        val = colorvoxel[(colors[:, None] != white).all(-1).any(-1),:]
+        #p = torch.tensor(colors[:, None] == white).all(-1).any(-1)
+        #print('tempcol--->',p) 
+        if self.pointcol is None:
+            self.pointcol = val
+        else:
+            self.pointcol = torch.cat((self.pointcol,val),axis=0)
+        print(self.pointcol.shape,val.shape,voxels.shape,colors.shape)
+
         return colorvoxels
 
     @torch.no_grad()
