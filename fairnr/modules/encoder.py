@@ -664,8 +664,9 @@ class SparseVoxelEncoder(Encoder):
     def white_color_separate(self, colorvoxels):
         voxels = colorvoxels[:,:3]
         colors = colorvoxels[:,3:]
-        val = colorvoxels[(colors[:, None] != torch.tensor([255,255,255]) ).all(-1).any(-1),:]
-        return val
+        p = colors[:,None] == [255,255,255]
+        print(p.shape) 
+        return colorvoxels
 
     @torch.no_grad()
     def exportcolor(self):
