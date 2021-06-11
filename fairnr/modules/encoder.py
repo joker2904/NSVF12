@@ -646,11 +646,11 @@ class SparseVoxelEncoder(Encoder):
     def cat_pointscolor(self, voxels, colors,min):
         encoder_states = self.precompute()
         points = encoder_states['voxel_center_xyz']
-        print(min,voxels,colors)
-        #voxels = torch.reshape(voxels,(voxels[0]*voxels[1]*voxels[2],voxels[3]))
-        #colors = torch.reshape(colors,(colors[0]*colors[1]*colors[2],colors[3]))
+        #print(min,voxels,colors)
+        voxels = voxels[0][0]
+        colors = colors[0][0]
         colors = (colors - min)/min
-
+        print(min,voxels,colors)
 
     @torch.no_grad()
     def exportcolor(self):
