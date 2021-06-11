@@ -643,19 +643,12 @@ class SparseVoxelEncoder(Encoder):
         return val
 
     @torch.no_grad()
-    def cat_pointscolor(self, voxelcolors):
+    def cat_pointscolor(self, self, voxels, colors):
         encoder_states = self.precompute()
         points = encoder_states['voxel_center_xyz']
-        print(voxelcolors.shape,points.shape)
-        '''
-        voxels = voxelcolors[:,:3]
-        
-        if self.pointcol is not None:
-            val = voxelcolors[(voxels[:, None] == points).all(-1).any(-1),:]
-            self.pointcol = torch.cat((self.pointcol,val),axis=0)
-        else:
-            self.pointcol = voxelcolors[(voxels[:, None] == points).all(-1).any(-1),:]
-        '''
+        print(voxels.shape,colors.shape)
+
+
     @torch.no_grad()
     def exportcolor(self):
         nvalues = self.pointcol.size(0)
