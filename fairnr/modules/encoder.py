@@ -280,7 +280,7 @@ class SparseVoxelEncoder(Encoder):
         else:
             step_size = args.raymarching_stepsize
         
-        colors = torch.zeros(fine_points.shape[0],6)
+        colors = torch.zeros(fine_points.shape[0],1)
         # register parameters (will be saved to checkpoints)
         self.register_buffer("points", fine_points)          # voxel centers
         self.register_buffer("pointcolors", colors)          # voxel color labels
