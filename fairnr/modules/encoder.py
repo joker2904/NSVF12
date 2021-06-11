@@ -649,11 +649,9 @@ class SparseVoxelEncoder(Encoder):
         if self.pointcol is not None:
             voxels = self.pointcol[:,:3]
             val = voxelcolors[(voxels[:, None] == points).all(-1).any(-1),:]
-        if self.pointcol is None:
-            self.pointcol = val
-        else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
-        #print(self.pointcol.shape,points.shape)
+        else:
+            self.pointcol = val
 
     @torch.no_grad()
     def exportcolor(self):
