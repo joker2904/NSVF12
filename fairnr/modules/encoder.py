@@ -658,6 +658,8 @@ class SparseVoxelEncoder(Encoder):
             self.pointcol = val
         else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
+        print(self.pointcol.shape,val.shape)
+
     @torch.no_grad()
     def exportcolor(self):
         nvalues = self.pointcol.size(0)
