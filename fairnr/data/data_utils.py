@@ -294,8 +294,6 @@ def write_images(writer, images, updates):
             continue
         else:
             writer.add_image(tag, img, updates, dataformats=dataform)
-        writer.add_image(tag, img, updates, dataformats=dataform)
-
 
 def compute_psnr(p, t):
     """Compute PSNR of model image predictions.
