@@ -118,9 +118,9 @@ def _main(args, output_file):
             t.log({'wps': round(wps_meter.avg)})
 
     # save the pointcloud data for experimentation
-    #plydata = model.encoder.exportcolor()
+    plydata = model.encoder.exportcolor()
     # write to ply file.
-    #plydata.write(open(os.path.join(args.render_output, 'VoxelColorPoints.ply'), 'wb'))
+    plydata.write(open(os.path.join(args.render_output, 'VoxelColorPoints.ply'), 'wb'))
 
     timestamp = generator.save_images(
         output_files, steps='shard{}'.format(shard_id), combine_output=args.render_combine_output)

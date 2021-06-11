@@ -663,10 +663,7 @@ class SparseVoxelEncoder(Encoder):
     @torch.no_grad()
     def exportcolor(self):
         nvalues = self.pointcol.size(0)
-        col = self.pointcol[:,3:]
-        pt = self.pointcol[:,:3]
-        col = (col + 1)/2
-        vpt = torch.cat((pt,col),axis=1)
+        vpt = self.pointcol
         points = []
         for k in range(nvalues):
             points.append( (vpt[k, 0], vpt[k, 1], vpt[k, 2], vpt[k, 3], vpt[k, 4], vpt[k, 5]) )
