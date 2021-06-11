@@ -665,8 +665,8 @@ class SparseVoxelEncoder(Encoder):
         white = torch.tensor([[255,255,255]])
         voxels = colorvoxels[:,:3]
         colors = colorvoxels[:,3:]
-        #p = torch.tensor(colors[:,None] ==  )
-        print('tempcol--->',colors.shape,white.shape) 
+        p = torch.tensor(colors[:,None] == white )
+        print('tempcol--->',p) 
         return colorvoxels
 
     @torch.no_grad()
