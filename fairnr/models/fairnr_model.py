@@ -279,7 +279,7 @@ class BaseModel(BaseFairseqModel):
 
         if 'originalpoints' in output and output['originalpoints'] is not None:
             colpoints = torch.cat( [output['originalpoints'][shape, view], (output['colors'][shape, view] - self.args.min_color) / (1 - self.args.min_color)], 1)
-            #val = self.encoder.white_color_separate(colpoints).to(device)
+            val = self.encoder.white_color_separate(colpoints)
             #print('final colored points :',val.shape,colpoints.shape)
             images['{}_point/{}:pointcloud'.format(name, img_id)] = {
                  'img': colpoints,   # XYZRGB
