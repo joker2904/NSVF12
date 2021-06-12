@@ -282,7 +282,7 @@ class BaseModel(BaseFairseqModel):
             val = self.encoder.white_color_separate(colpoints)
             #print('final colored points :',val.shape,colpoints.shape)
             images['{}_point/{}:pointcloud'.format(name, img_id)] = {
-                 'img': colpoints,   # XYZRGB
+                 'img': val,   # XYZRGB
                  'raw': True }
             
         return images
