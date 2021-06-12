@@ -670,7 +670,7 @@ class SparseVoxelEncoder(Encoder):
         #print('tempcol--->',p) 
         print(colors)
 
-        return val
+        return white
 
     @torch.no_grad()
     def exportcolor(self):
