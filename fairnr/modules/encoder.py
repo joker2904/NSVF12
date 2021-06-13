@@ -663,11 +663,14 @@ class SparseVoxelEncoder(Encoder):
     @torch.no_grad()
     def white_color_separate(self, voxelcolor):
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
-        white = torch.tensor([[100.0,100.0,100.0]])
+        upper = torch.tensor([[100.0,100.0,100.0]])
+        lower = torch.tensor([[50.0,50.0,50.0]])
         voxels = voxelcolor[:,:3]
         colors = voxelcolor[:,3:]*255.0
-        p = ~(colors[:, None] > white).all(-1).any(-1)
-        final = voxelcolor[p,:]
+        p = ~(colors[:, None] > upper).all(-1).any(-1)
+        q = ~(colors[:, None] < lower).all(-1).any(-1)
+        r = p * q
+        final = voxelcolor[r,:]
         print('tempcol--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
         #print(colors)
         return final
