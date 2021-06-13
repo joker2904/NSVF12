@@ -670,6 +670,7 @@ class SparseVoxelEncoder(Encoder):
         p = ~(colors[:, None] > upper).all(-1).any(-1)
         q = ~(colors[:, None] < lower).all(-1).any(-1)
         r = p * q
+        r = ~r
         final = voxelcolor[r,:]
         print('tempcol--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
         #print(colors)
