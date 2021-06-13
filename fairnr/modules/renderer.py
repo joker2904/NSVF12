@@ -106,7 +106,7 @@ class VolumeRenderer(Renderer):
         # forward implicit fields
         field_outputs = field_fn(field_inputs, outputs=output_types)
         outputs = {'sample_mask': sample_mask}
-        
+        print('field outputs-->',field_outputs['originalpoints'].shape,field_outputs['texture'].shape)
         def masked_scatter(mask, x):
             B, K = mask.size()
             if x.dim() == 1:
