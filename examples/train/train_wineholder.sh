@@ -5,7 +5,7 @@
 
 # just for debugging
 DATA="Toad"
-RES="100x100"
+RES="200x200"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
