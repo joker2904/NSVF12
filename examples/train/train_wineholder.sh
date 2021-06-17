@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 # just for debugging
-DATA="Truck"
+DATA="Toad"
 RES="100x100"
 ARCH="nsvf_base"
 SUFFIX="v1"
