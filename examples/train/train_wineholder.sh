@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 # just for debugging
+# checking bike dataset
 DATA="Bike"
 RES="200x200"
 ARCH="nsvf_base"
