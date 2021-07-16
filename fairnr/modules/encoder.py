@@ -673,7 +673,7 @@ class SparseVoxelEncoder(Encoder):
         final = voxelcolor[r,:]
         print('tempcolor--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
         #print(colors)
-        return voxelcolor #final
+        return final
 
     @torch.no_grad()
     def exportcolor(self):
