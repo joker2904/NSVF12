@@ -6,7 +6,7 @@
 # just for debugging
 # checking bike dataset
 DATA="Barn"
-RES="200x200"
+RES="100x100"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
@@ -18,7 +18,7 @@ mkdir -p $SAVE/$MODEL
 python train.py ${DATASET} \
     --user-dir fairnr \
     --task single_object_rendering \
-    --train-views "0..50" \
+    --train-views "0..100" \
     --view-resolution $RES \
     --max-sentences 1 \
     --view-per-batch 2 \
@@ -26,7 +26,7 @@ python train.py ${DATASET} \
     --no-preload \
     --sampling-on-mask 1.0 --no-sampling-at-reader \
     --valid-view-resolution $RES \
-    --valid-views "50..100" \
+    --valid-views "100..200" \
     --valid-view-per-batch 1 \
     --transparent-background "1.0,1.0,1.0" \
     --background-stop-gradient \
