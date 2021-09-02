@@ -108,6 +108,7 @@ class SparseVoxelOctreeRayIntersect(Function):
         ray_start = ray_start.reshape(S * G, K, 3)
         ray_dir = ray_dir.reshape(S * G, K, 3)
         points = points.expand(S * G, *points.size()[1:]).contiguous()
+        print('shapes-->',S,G,children.size())
         children = children.expand(S * G, *children.size()[1:]).contiguous()
         inds, min_depth, max_depth = _ext.svo_intersect(
             ray_start.float(), ray_dir.float(), points.float(), children.int(), voxelsize, n_max)
