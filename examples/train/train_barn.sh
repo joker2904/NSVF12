@@ -6,7 +6,7 @@
 # just for debugging
 # checking bike dataset
 DATA="Barn"
-RES="100x100"
+RES="50x50"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
@@ -22,7 +22,7 @@ python train.py ${DATASET} \
     --view-resolution $RES \
     --max-sentences 1 \
     --view-per-batch 4 \
-    --pixel-per-view 256 \
+    --pixel-per-view 128 \
     --no-preload \
     --sampling-on-mask 1.0 --no-sampling-at-reader \
     --valid-view-resolution $RES \
