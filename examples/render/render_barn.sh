@@ -5,7 +5,7 @@
 
 # just for debugging
 DATA="Barn"
-RES="100x100"
+RES="50x50"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
