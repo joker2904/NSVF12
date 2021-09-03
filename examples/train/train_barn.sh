@@ -6,7 +6,7 @@
 # just for debugging
 # checking bike dataset
 DATA="Barn"
-RES="100x100"
+RES="20x20"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}
