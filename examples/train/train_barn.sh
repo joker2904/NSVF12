@@ -21,7 +21,7 @@ python train.py ${DATASET} \
     --train-views "0..50" \
     --view-resolution $RES \
     --max-sentences 1 \
-    --view-per-batch 1 \
+    --view-per-batch 2 \
     --pixel-per-view 128 \
     --no-preload \
     --sampling-on-mask 1.0 --no-sampling-at-reader \
