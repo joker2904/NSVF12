@@ -26,7 +26,7 @@ python train.py ${DATASET} \
     --no-preload \
     --sampling-on-mask 1.0 --no-sampling-at-reader \
     --valid-view-resolution $RES \
-    --valid-views "100..200" \
+    --valid-views "100..132" \
     --valid-view-per-batch 1 \
     --transparent-background "1.0,1.0,1.0" \
     --background-stop-gradient \
