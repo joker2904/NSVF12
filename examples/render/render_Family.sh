@@ -22,7 +22,7 @@ python render.py ${DATASET} \
     --render-beam 1 \
     --render-save-fps 24 \
     --render-camera-poses ${DATASET}/pose \
-    --render-views "0..180" \
+    --render-views "0..170" \
     --model-overrides '{"chunk_size":256,"raymarching_tolerance":0.01}' \
     --render-resolution $RES \
     --render-output ${SAVE}/output \
