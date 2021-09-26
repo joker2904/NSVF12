@@ -5,7 +5,7 @@
 
 # just for debugging
 # checking bike dataset
-DATA="Bike"
+DATA="Wineholder"
 RES="200x200"
 ARCH="nsvf_base"
 SUFFIX="v1"
