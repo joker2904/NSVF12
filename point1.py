@@ -8,7 +8,7 @@ point_all = []
 count = 0
 for filename in files:
 	count = count + 1
-	if count > 50:
+	if count > 150:
 		break
 	print(count,filename)
 	pcd = o3d.io.read_point_cloud(folder + filename)
