@@ -2,7 +2,7 @@ import open3d as o3d
 import numpy as np
 import os
 
-folder = "savepoint/Wineholder/output/point/"
+folder = "../savepoint/Wineholder/output/point/"
 files = os.listdir(folder)
 l = []
 count = 0
