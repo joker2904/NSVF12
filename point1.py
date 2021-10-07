@@ -2,21 +2,25 @@ import open3d as o3d
 import numpy as np
 import os
 
+#folder = "../savepoint/Wineholder/output/point/"
+
+
 folder = "../savepoint/Wineholder/output/point/"
 files = os.listdir(folder)
 point_all = []
 count = 0
 for filename in files:
 	count = count + 1
-	if count > 150:
+	if count > 80:
 		break
 	print(count,filename)
 	pcd = o3d.io.read_point_cloud(folder + filename)
 	print(pcd,type(pcd))
 	point_all = point_all + [pcd]
-#print(l)
-#print(np.asarray(pcd.points))
+	o3d.io.write_point_cloud("result.pcd", pcd)
+
 p = o3d.visualization.draw_geometries(point_all)
+#o3d.io.write_point_cloud("copy_of_fragment.pcd", point_all)
 
 '''
 
