@@ -4,7 +4,7 @@ import os
 
 folder = "../savepoint/Wineholder/output/point/"
 files = os.listdir(folder)
-l = []
+point_all = []
 count = 0
 for filename in files:
 	count = count + 1
@@ -13,10 +13,10 @@ for filename in files:
 	print(count,filename)
 	pcd = o3d.io.read_point_cloud(folder + filename)
 	print(pcd,type(pcd))
-	l = l + [pcd]
+	point_all = point_all + [pcd]
 #print(l)
 #print(np.asarray(pcd.points))
-p = o3d.visualization.draw_geometries(l)
+p = o3d.visualization.draw_geometries(point_all)
 
 '''
 
