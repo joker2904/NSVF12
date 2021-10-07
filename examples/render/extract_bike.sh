@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 # just for debugging
-DATA="Bike"
+DATA="Wineholder"
 RES="200x200"
 ARCH="nsvf_base"
 SUFFIX="v1"
