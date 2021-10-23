@@ -271,6 +271,7 @@ class RaidanceField(Field):
                 filtered_inputs += [func(inputs[name])] if name != 'sigma' else [func(inputs[name].unsqueeze(-1))]
                 
             filtered_inputs = torch.cat(filtered_inputs, -1)
+            print('Filtered_inputs: ',filtered_inputs.shape)
             inputs['texture'] = self.renderer(filtered_inputs)
             
             if self.min_color == 0:
