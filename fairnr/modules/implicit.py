@@ -63,6 +63,7 @@ class ImplicitField(nn.Module):
                 self.net.apply(self.init_weights)
 
     def forward(self, x):
+        print("Inside implicit field:",x.shape)
         y = self.net[0](x)
         for i in range(len(self.net) - 1):
             if (self.skips is not None) and (i in self.skips):
@@ -139,6 +140,7 @@ class TextureField(ImplicitField):
         out_dim = 3 if not with_alpha else 4
         super().__init__(in_dim, out_dim, hidden_dim, num_layers, 
             outmost_linear=True, with_ln=with_ln, spec_init=spec_init)
+        print('Inside texture')
 
 
 # ------------------ #
