@@ -273,7 +273,7 @@ class RaidanceField(Field):
             filtered_inputs = torch.cat(filtered_inputs, -1)
             print('Filtered_inputs: ',filtered_inputs.shape)
             inputs['texture'] = self.renderer(filtered_inputs)
-            
+            print('texture :',inputs['texture'].shape)
             if self.min_color == 0:
                 inputs['texture'] = torch.sigmoid(inputs['texture'])
             #print('voxel inputs --->')
