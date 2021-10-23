@@ -44,14 +44,14 @@ class RenderingCriterion(FairseqCriterion):
         """
         net_output = model(**sample)
         sample.update(net_output['samples'])
-    
+        
         loss, loss_output = self.compute_loss(model, net_output, sample, reduce=reduce)
         if self.hierarchical:
             assert net_output.get('coarse', None) is not None, "missing coarse level outputs."
             loss0, loss_output0 = self.compute_loss(model, net_output['coarse'], sample, reduce=reduce)
             loss = loss + loss0
             loss_output.update({'cor-' + key: loss_output0[key] for key in loss_output0})
-        
+        print('loss :',loss.shape)
         sample_size = 1
         
         logging_output = {
