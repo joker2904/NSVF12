@@ -701,7 +701,7 @@ class SparseVoxelEncoder(Encoder):
         negative = torch.cat([negative,nlabel],1)
         results = torch.cat([positive,negative],0)
         '''
-        return positive
+        return negative
 
     @torch.no_grad()
     def exportcolor(self):
