@@ -681,7 +681,7 @@ class SparseVoxelEncoder(Encoder):
         print('semantic segmentation entered')
         upper = torch.tensor([[0.0,138.0,0.0]])
         lower = torch.tensor([[0.0,135.0,0.0]])
-        plabel = torch.tensor([[255.0,0.0,0.0]])
+        plabel = torch.tensor([[255.0,255.0,255.0]])
         nlabel = torch.tensor([[0.0,0.0,255.0]])
         positions = voxelcolor[:,:3]
         colors = voxelcolor[:,3:]*255
