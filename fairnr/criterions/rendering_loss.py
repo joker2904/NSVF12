@@ -212,5 +212,5 @@ class SRNLossCriterion(RenderingCriterion):
         loss = loss + model.dummy_loss + self.dummy_loss * 0.
         logging_outputs = {key: item(losses[key][0]) for key in losses}
         logging_outputs.update(other_logs)
-        print('srn loss: ',loss.shape)
+        print('srn loss: ',loss,loss.shape)
         return loss, logging_outputs
