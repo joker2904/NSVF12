@@ -51,7 +51,7 @@ class RenderingCriterion(FairseqCriterion):
             loss0, loss_output0 = self.compute_loss(model, net_output['coarse'], sample, reduce=reduce)
             loss = loss + loss0
             loss_output.update({'cor-' + key: loss_output0[key] for key in loss_output0})
-        print('loss :',loss.shape)
+        print('loss :',loss,loss.shape)
         sample_size = 1
         
         logging_output = {
