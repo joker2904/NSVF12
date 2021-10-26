@@ -679,7 +679,7 @@ class SparseVoxelEncoder(Encoder):
     def segment_sematic(self, voxelcolor):
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
         print('semantic segmentation entered')
-        upper = torch.tensor([[0.0,140.0,0.0]])
+        upper = torch.tensor([[0.0,250.0,0.0]])
         lower = torch.tensor([[0.0,110.0,0.0]])
         positions = voxelcolor[:,:3]
         colors = voxelcolor[:,3:]*255
