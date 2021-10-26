@@ -683,8 +683,8 @@ class SparseVoxelEncoder(Encoder):
         lower = torch.tensor([[0.0,120.,0.0]])
         positions = voxelcolor[:,:3]
         colors = voxelcolor[:,3:]*255
-        p = ~(colors[:, None] < upper).all(-1).any(-1)
-        q = ~(colors[:, None] > lower).all(-1).any(-1)
+        p = ~(colors[1] > upper[1]).all(-1).any(-1)
+        q = ~(colors[1] < lower[1]).all(-1).any(-1)
         r = p * q        
         final = voxelcolor[r,:]
         return final
