@@ -694,14 +694,14 @@ class SparseVoxelEncoder(Encoder):
         
         positive = positive[:,:3]
         negative = negative[:,:3]
-        plabel = torch.cat(positive.shape[0]*[plabel])*255
-        nlabel = torch.cat(negative.shape[0]*[nlabel])*255
+        plabel = torch.cat(positive.shape[0]*[plabel])
+        nlabel = torch.cat(negative.shape[0]*[nlabel])
         print('p and s :',positive.shape,negative.shape,plabel.shape,nlabel.shape)
         positive = torch.cat([positive,plabel],1)
         negative = torch.cat([negative,nlabel],1)
         #print(positive)
         #print(negative)
-        print(voxelcolor)
+        #print(voxelcolor)
         results = torch.cat([positive,negative],0)        
         return positive
 
