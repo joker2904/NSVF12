@@ -676,6 +676,21 @@ class SparseVoxelEncoder(Encoder):
         return final
 
     @torch.no_grad()
+    def segment_sematic(self, voxels):
+        torch.set_default_tensor_type('torch.cuda.FloatTensor')
+        upper = torch.tensor([[100.0,100.0,100.0]])
+        lower = torch.tensor([[0.0,0.0,0.0]])
+        voxels = voxelcolor[:,:3]
+        colors = voxelcolor[:,3:]*255.0
+        p = ~(colors[:, None] > upper).all(-1).any(-1)
+        q = ~(colors[:, None] < lower).all(-1).any(-1)
+        r = p * q        
+        final = voxelcolor[r,:]
+        print('tempcolor--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
+        #print(colors)
+        return final
+
+    @torch.no_grad()
     def exportcolor(self):
         nvalues = self.pointcol.size(0)
         vpt = self.pointcol
