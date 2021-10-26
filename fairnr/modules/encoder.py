@@ -686,8 +686,10 @@ class SparseVoxelEncoder(Encoder):
         p = ~(colors[:, None] > upper).all(-1).any(-1)
         q = ~(colors[:, None] < lower).all(-1).any(-1)
         r = ~(p * q)        
-        final = voxelcolor[r,:]
-        return final
+        positive = voxelcolor[r,:]
+        n = (p * q)        
+        negative = voxelcolor[n,:]
+        return negative
 
     @torch.no_grad()
     def exportcolor(self):
