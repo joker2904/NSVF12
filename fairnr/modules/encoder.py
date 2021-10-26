@@ -684,7 +684,7 @@ class SparseVoxelEncoder(Encoder):
         positions = voxelcolor[:,:3]
         colors = voxelcolor[:,3:]*upper
         #labels = (colors[:, None] >= lower and colors[:, None] <= upper)
-        result = torch.cat(positions,colors)     
+        result = torch.cat([positions,colors],1)     
         print('label values :',colors.shape)
         return result
 
