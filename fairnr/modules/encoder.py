@@ -690,8 +690,7 @@ class SparseVoxelEncoder(Encoder):
         r = ~(p * q)        
         positive = voxelcolor[r,:]
         n = (p * q)        
-        negative = voxelcolor[n,:]
-        
+        negative = voxelcolor[n,:]        
         positive = positive[:,:3]
         negative = negative[:,:3]
         plabel = torch.cat(positive.shape[0]*[plabel])
