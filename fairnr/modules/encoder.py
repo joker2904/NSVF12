@@ -695,11 +695,37 @@ class SparseVoxelEncoder(Encoder):
         negative = negative[:,:3]
         plabel = torch.cat(positive.shape[0]*[plabel])
         nlabel = torch.cat(negative.shape[0]*[nlabel])
-        print('p and s :',positive.shape,negative.shape,plabel.shape,nlabel.shape)
         positive = torch.cat([positive,plabel],1)
         negative = torch.cat([negative,nlabel],1)
         results = torch.cat([positive,negative],0)        
         return results
+
+    @torch.no_grad()
+    def segment_sematic_3label(self, voxelcolor):
+        torch.set_default_tensor_type('torch.cuda.FloatTensor')
+        print('semantic segmentation entered')
+        upper = torch.tensor([[218.0,165.0,32.0]])
+        lower = torch.tensor([[200.0,155.0,25.0]])
+        plabel = torch.tensor([[1.0,0.0,0.0]])
+        nlabel = torch.tensor([[0.0,0.0,1.0]])
+        positions = voxelcolor[:,:3]
+        colors = voxelcolor[:,3:]*255
+        p = ~(colors[:, None] > upper).all(-1).any(-1)
+        q = ~(colors[:, None] < lower).all(-1).any(-1)
+        r = ~(p * q)        
+        positive = voxelcolor[r,:]
+        n = (p * q)        
+        negative = voxelcolor[n,:]        
+        positive = positive[:,:3]
+        negative = negative[:,:3]
+        plabel = torch.cat(positive.shape[0]*[plabel])
+        nlabel = torch.cat(negative.shape[0]*[nlabel])
+        positive = torch.cat([positive,plabel],1)
+        negative = torch.cat([negative,nlabel],1)
+        results = torch.cat([positive,negative],0)        
+        return results
+
+
 
     @torch.no_grad()
     def exportcolor(self):
