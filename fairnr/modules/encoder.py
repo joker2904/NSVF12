@@ -704,7 +704,7 @@ class SparseVoxelEncoder(Encoder):
     def segment_sematic_3label(self, voxelcolor):
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
         print('semantic segmentation entered')
-        upper = torch.tensor([[218.0,165.0,1.0]])
+        upper = torch.tensor([[218.0,165.0,10.0]])
         lower = torch.tensor([[200.0,155.0,0.0]])
         plabel = torch.tensor([[1.0,0.0,0.0]])
         nlabel = torch.tensor([[0.0,0.0,1.0]])
