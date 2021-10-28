@@ -643,7 +643,7 @@ class SparseVoxelEncoder(Encoder):
         return val
 
     @torch.no_grad()
-    def cat_pointscolor(self, voxels, colors,min):
+    def majority_voting_pointscolor(self, voxels, colors,min):
         encoder_states = self.precompute()
         points = encoder_states['voxel_center_xyz']
         #print(min,voxels,colors)
