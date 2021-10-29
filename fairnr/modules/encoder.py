@@ -471,7 +471,7 @@ class SparseVoxelEncoder(Encoder):
                 (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
                 for k in range(voxel_idx.size(0))
             ]
-        '''
+        
         nvalues = voxel_idx.size(0)
         points = []
         for k in range(nvalues):
@@ -479,7 +479,11 @@ class SparseVoxelEncoder(Encoder):
            points.append( (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 0) )
          else:
            points.append( (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 0, 255, 0) )
-		
+		'''
+        nvalues = voxel_colors.size(0)
+        points = []
+        for k in range(nvalues):
+            points.append( (voxel_colors[k, 0], voxel_colors[k, 1], voxel_colors[k, 2], voxel_colors[k, 3], voxel_colors[k, 4], voxel_colors[k, 5]) )
         vertex = np.array(points, dtype=[('x', 'f4'), ('y', 'f4'), ('z', 'f4'), ('red', 'u1'), ('blue', 'u1'), ('green', 'u1')])
         return PlyData([PlyElement.describe(vertex, 'vertex')])
         
