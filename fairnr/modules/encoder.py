@@ -837,6 +837,7 @@ class SparseVoxelEncoder(Encoder):
         self.pointcolors = torch.zeros(self.points.shape[0],1)
         if self.pointcol is not None:
             self.pointcolors = self.pointcol
+            self.pointcol = None
             print('pointspecial: ',self.pointcol.shape,self.pointcolors.shape, self.points.shape)
         self.keep = self.keep.new_ones(new_point_length)
         logger.info("splitting done. # of voxels before: {}, after: {} voxels".format(points.size(0), self.keep.sum()))
