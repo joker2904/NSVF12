@@ -673,7 +673,7 @@ class SparseVoxelEncoder(Encoder):
             self.pointcol = colorvoxel #val
         else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
-        print(self.pointcol.shape,val.shape,voxels.shape,colors.shape)
+        print(self.pointcol.shape,colorvoxel.shape,voxels.shape,colors.shape)
 
     @torch.no_grad()
     def white_color_separate(self, voxelcolor):
