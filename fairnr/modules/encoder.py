@@ -667,10 +667,10 @@ class SparseVoxelEncoder(Encoder):
         colors = (colors - min)/min
         #print(min,voxels.shape,colors.shape)
         colorvoxel = torch.cat((voxels, colors),axis=1)
-        val = colorvoxel[(voxels[:, None] == points).all(-1).any(-1),:]
+        #val = colorvoxel[(voxels[:, None] == points).all(-1).any(-1),:]
         #print('voxel colors->',voxels.shape,points.shape,val.shape)
         if self.pointcol is None:
-            self.pointcol = val
+            self.pointcol = colorvoxel #val
         else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
         print(self.pointcol.shape,val.shape,voxels.shape,colors.shape)
@@ -836,7 +836,7 @@ class SparseVoxelEncoder(Encoder):
         self.feats = new_feats
         self.pointcolors = self.pointcol            
         #print('pointspecial: ',self.pointcol.shape,self.pointcolors.shape, self.points.shape)
-        #self.pointcol = None
+        self.pointcol = None
         self.keep = self.keep.new_ones(new_point_length)
         logger.info("splitting done. # of voxels before: {}, after: {} voxels".format(points.size(0), self.keep.sum()))
         
