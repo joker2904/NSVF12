@@ -467,10 +467,7 @@ class SparseVoxelEncoder(Encoder):
         self.prune_voxel_semantic()
         voxel_colors = self.pointcolors  #[self.keep.bool()]
         print(voxel_colors,voxel_colors.shape,voxel_idx.shape,voxel_pts.shape)
-        #test code
-        temp = voxel_colors[:,:3]
-        temp1 = voxel_colors[(temp[:, None] == points[0,:]).all(-1).any(-1),:]
-        print(temp1,temp1.shape,points[0,:])
+
         '''
         points = [
                 (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
@@ -659,7 +656,9 @@ class SparseVoxelEncoder(Encoder):
         voxels = colorvoxel[:,:3]
         self.pointcolors = colorvoxel[(voxels[:, None] == points).all(-1).any(-1),:]
         #print('voxel colors->',voxels.shape,points.shape,val.shape) 
-
+        #test code
+        temp1 = voxel_colors[(voxels[:, None] == points[0,:]).all(-1).any(-1),:]
+        print(temp1,temp1.shape,points[0,:])
 
     @torch.no_grad()
     def majority_voting_pointscolor(self, voxels, colors,min):
