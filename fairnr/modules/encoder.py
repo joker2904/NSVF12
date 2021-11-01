@@ -467,6 +467,10 @@ class SparseVoxelEncoder(Encoder):
         self.prune_voxel_semantic()
         voxel_colors = self.pointcolors  #[self.keep.bool()]
         print(voxel_colors,voxel_colors.shape,voxel_idx.shape,voxel_pts.shape)
+        #test code
+        temp = voxel_colors[:,:3]
+        temp1 = voxel_colors[(temp[:, None] == points[0,:]).all(-1).any(-1),:]
+        print(temp1,temp1.shape,points[0,:])
         '''
         points = [
                 (voxel_pts[k, 0], voxel_pts[k, 1], voxel_pts[k, 2], 255, 0, 255)
