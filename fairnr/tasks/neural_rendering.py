@@ -272,7 +272,7 @@ class SingleObjRenderingTask(FairseqTask):
                     for step, inner_sample in enumerate(progress):
                         outs = model(**self._trainer._prepare_sample(self.filter_dummy(inner_sample)))
                         progress.log(stats=outs['other_logs'], tag='track', step=step)
-
+            model.reassignpoints()
             model.prune_voxels(self.pruning_th, train_stats=getattr(self.args, "pruning_with_train_stats", False))
             self.update_step(update_num, 'pv')
 

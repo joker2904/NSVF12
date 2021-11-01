@@ -817,6 +817,12 @@ class SparseVoxelEncoder(Encoder):
             for i in range(0, points.size(0), chunk_size)], 0)
 
     @torch.no_grad()
+    def reassignpoints(self):
+        self.pointcolors = self.pointcol            
+        #print('pointspecial: ',self.pointcol.shape,self.pointcolors.shape, self.points.shape)
+        self.pointcol = None
+
+    @torch.no_grad()
     def splitting(self):
         logger.info("splitting...")
         encoder_states = self.precompute(id=None)
@@ -834,9 +840,9 @@ class SparseVoxelEncoder(Encoder):
 
         self.points = new_points
         self.feats = new_feats
-        self.pointcolors = self.pointcol            
+        #self.pointcolors = self.pointcol            
         #print('pointspecial: ',self.pointcol.shape,self.pointcolors.shape, self.points.shape)
-        self.pointcol = None
+        #self.pointcol = None
         self.keep = self.keep.new_ones(new_point_length)
         logger.info("splitting done. # of voxels before: {}, after: {} voxels".format(points.size(0), self.keep.sum()))
         
