@@ -660,7 +660,7 @@ class SparseVoxelEncoder(Encoder):
         count = 0
         for i in range(0,points.shape[0]):
             print('~~~~~~~~~~~~~~',i,'~~~~~~~~~~~~~~~~')
-            temp1 = voxels[voxels[:,None] == points[i,:]]
+            temp1 = voxels[:,None] == points[i,:]
             if temp1.shape[0] > 0:
                 count = count + 1
                 print(temp1,temp1.shape,points[i,:])
