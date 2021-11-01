@@ -663,7 +663,7 @@ class SparseVoxelEncoder(Encoder):
             temp1 = colorvoxel[(voxels[:, None] == points[i,:]).all(-1).any(-1),:]
             if temp1.shape[0] > 0:
                 count = count + 1
-                print(temp1,temp1.shape,points[i,:])
+            print(temp1,temp1.shape,points[i,:])
         print('Count = ',count)
 
     @torch.no_grad()
