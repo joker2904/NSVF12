@@ -247,13 +247,15 @@ def discretize_points(voxel_points, voxel_size):
     return voxel_indices, residual
 
 
-def splitting_points(point_xyz, point_feats, values, half_voxel):        
+def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel):        
     # generate new centers
     quarter_voxel = half_voxel * .5
     new_points = offset_points(point_xyz, quarter_voxel).reshape(-1, 3)
     old_coords = discretize_points(point_xyz, quarter_voxel)[0]
     new_coords = offset_points(old_coords).reshape(-1, 3)
     new_keys0  = offset_points(new_coords).reshape(-1, 3)
+    new_label0 = offset_points(label0).reshape(-1, 3)
+    new_label1 = offset_points(label1).reshape(-1, 3)
     
     # get unique keys and inverse indices (for original key0, where it maps to in keys)
     new_keys, new_feats = torch.unique(new_keys0, dim=0, sorted=True, return_inverse=True)
@@ -271,7 +273,7 @@ def splitting_points(point_xyz, point_feats, values, half_voxel):
         new_values = trilinear_interp(p, q, point_feats)
     else:
         new_values = None
-    return new_points, new_feats, new_values, new_keys
+    return new_points, new_feats, new_values, new_keys, new_label0, new_label1
 
 
 def expand_points(voxel_points, voxel_size):
