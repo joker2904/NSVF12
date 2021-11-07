@@ -246,7 +246,7 @@ def discretize_points(voxel_points, voxel_size):
     residual = (voxel_points - voxel_indices.type_as(voxel_points) * voxel_size).mean(0, keepdim=True)
     return voxel_indices, residual
 
-
+'''
 def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel):        
     # generate new centers
     quarter_voxel = half_voxel * .5
@@ -274,7 +274,34 @@ def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel)
     else:
         new_values = None
     return new_points, new_feats, new_values, new_keys, new_label0, new_label1
-
+'''
+def splitting_points(point_xyz, point_feats, values, half_voxel):        
+    # generate new centers
+    quarter_voxel = half_voxel * .5
+    new_points = offset_points(point_xyz, quarter_voxel).reshape(-1, 3)
+    old_coords = discretize_points(point_xyz, quarter_voxel)[0]
+    new_coords = offset_points(old_coords).reshape(-1, 3)
+    new_keys0  = offset_points(new_coords).reshape(-1, 3)
+    #new_label0 = offset_points(label0).reshape(-1, 1)
+    #new_label1 = offset_points(label1).reshape(-1, 1)
+    
+    # get unique keys and inverse indices (for original key0, where it maps to in keys)
+    new_keys, new_feats = torch.unique(new_keys0, dim=0, sorted=True, return_inverse=True)
+    new_keys_idx = new_feats.new_zeros(new_keys.size(0)).scatter_(
+        0, new_feats, torch.arange(new_keys0.size(0), device=new_feats.device) // 64)
+    
+    # recompute key vectors using trilinear interpolation 
+    new_feats = new_feats.reshape(-1, 8)
+    
+    if values is not None:
+        p = (new_keys - old_coords[new_keys_idx]).type_as(point_xyz).unsqueeze(1) * .25 + 0.5 # (1/4 voxel size)
+        q = offset_points(p, .5, offset_only=True).unsqueeze(0) + 0.5   # BUG?
+        point_feats = point_feats[new_keys_idx]
+        point_feats = F.embedding(point_feats, values).view(point_feats.size(0), -1)
+        new_values = trilinear_interp(p, q, point_feats)
+    else:
+        new_values = None
+    return new_points, new_feats, new_values, new_keys #, new_label0, new_label1
 
 def expand_points(voxel_points, voxel_size):
     _voxel_size = min([
