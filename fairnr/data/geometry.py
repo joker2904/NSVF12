@@ -261,8 +261,8 @@ def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel)
     old_coords = discretize_points(point_xyz, quarter_voxel)[0]
     new_coords = offset_points(old_coords).reshape(-1, 3)
     new_keys0  = offset_points(new_coords).reshape(-1, 3)
-    new_label0 = offset_points_1D(label0).reshape(-1, 1)
-    new_label1 = offset_points_1D(label1).reshape(-1, 1)
+    new_label0 = offset_points(label0).reshape(-1, 1)
+    new_label1 = offset_points(label1).reshape(-1, 1)
     
     # get unique keys and inverse indices (for original key0, where it maps to in keys)
     new_keys, new_feats = torch.unique(new_keys0, dim=0, sorted=True, return_inverse=True)
@@ -281,7 +281,7 @@ def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel)
     else:
         new_values = None
     return new_points, new_feats, new_values, new_keys, new_label0, new_label1
-    
+
 '''
 def splitting_points(point_xyz, point_feats, values, half_voxel):        
     # generate new centers
