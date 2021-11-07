@@ -393,7 +393,7 @@ class SparseVoxelEncoder(Encoder):
         label1 = self.pointlabel1[self.keep.bool()]
         points[:, 0] += (self.voxel_size / 10)
         values = self.values.weight[: self.num_keys] if self.values is not None else None
-        print('labels :',label0.shape,label1.shape)
+        print('labels :',points.shape,label0.shape,label1.shape)
         if id is not None:
             # extend size to support multi-objects
             feats  = feats.unsqueeze(0).expand(id.size(0), *feats.size()).contiguous()
