@@ -410,9 +410,9 @@ class SparseVoxelEncoder(Encoder):
         encoder_states = {
             'voxel_vertex_idx': feats,
             'voxel_center_xyz': points,
-            'voxel_vertex_emb': values,
-            'voxel_vertex_label0': label0,
-            'voxel_vertex_label1': label1
+            'voxel_vertex_emb': values
+            #'voxel_vertex_label0': label0,
+            #'voxel_vertex_label1': label1
         }
 
         if self.use_octree:
