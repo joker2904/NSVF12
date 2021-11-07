@@ -240,7 +240,7 @@ def offset_points(point_xyz, quarter_voxel=1, offset_only=False, bits=2):
 def offset_points_1D(point_xyz, quarter_voxel=1, offset_only=False, bits=2):
     c = torch.arange(1, 2 * bits, 2, device=point_xyz.device)
     ox = torch.meshgrid([c])
-    offset = (torch.cat([ox.reshape(-1, 1)], 1).type_as(point_xyz) - bits) / float(bits - 1)
+    offset = [ox.reshape(-1, 1)].type_as(point_xyz) - bits) / float(bits - 1)
     if not offset_only:
         return point_xyz.unsqueeze(1) + offset.unsqueeze(0).type_as(point_xyz) * quarter_voxel
     return offset.type_as(point_xyz) * quarter_voxel
