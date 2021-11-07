@@ -237,6 +237,14 @@ def offset_points(point_xyz, quarter_voxel=1, offset_only=False, bits=2):
         return point_xyz.unsqueeze(1) + offset.unsqueeze(0).type_as(point_xyz) * quarter_voxel
     return offset.type_as(point_xyz) * quarter_voxel
 
+def offset_points_1D(point_xyz, quarter_voxel=1, offset_only=False, bits=2):
+    c = torch.arange(1, 2 * bits, 2, device=point_xyz.device)
+    ox = torch.meshgrid([c])
+    offset = (torch.cat([ox.reshape(-1, 1)], 1).type_as(point_xyz) - bits) / float(bits - 1)
+    if not offset_only:
+        return point_xyz.unsqueeze(1) + offset.unsqueeze(0).type_as(point_xyz) * quarter_voxel
+    return offset.type_as(point_xyz) * quarter_voxel
+
 
 def discretize_points(voxel_points, voxel_size):
     # this function turns voxel centers/corners into integer indeices
@@ -246,7 +254,6 @@ def discretize_points(voxel_points, voxel_size):
     residual = (voxel_points - voxel_indices.type_as(voxel_points) * voxel_size).mean(0, keepdim=True)
     return voxel_indices, residual
 
-'''
 def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel):        
     # generate new centers
     quarter_voxel = half_voxel * .5
@@ -254,8 +261,8 @@ def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel)
     old_coords = discretize_points(point_xyz, quarter_voxel)[0]
     new_coords = offset_points(old_coords).reshape(-1, 3)
     new_keys0  = offset_points(new_coords).reshape(-1, 3)
-    new_label0 = offset_points(label0).reshape(-1, 1)
-    new_label1 = offset_points(label1).reshape(-1, 1)
+    new_label0 = offset_points_1D(label0).reshape(-1, 1)
+    new_label1 = offset_points_1D(label1).reshape(-1, 1)
     
     # get unique keys and inverse indices (for original key0, where it maps to in keys)
     new_keys, new_feats = torch.unique(new_keys0, dim=0, sorted=True, return_inverse=True)
@@ -274,6 +281,7 @@ def splitting_points(point_xyz, point_feats, values, label0, label1, half_voxel)
     else:
         new_values = None
     return new_points, new_feats, new_values, new_keys, new_label0, new_label1
+    
 '''
 def splitting_points(point_xyz, point_feats, values, half_voxel):        
     # generate new centers
@@ -302,6 +310,8 @@ def splitting_points(point_xyz, point_feats, values, half_voxel):
     else:
         new_values = None
     return new_points, new_feats, new_values, new_keys #, new_label0, new_label1
+'''
+
 
 def expand_points(voxel_points, voxel_size):
     _voxel_size = min([

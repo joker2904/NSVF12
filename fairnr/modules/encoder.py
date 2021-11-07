@@ -847,11 +847,11 @@ class SparseVoxelEncoder(Encoder):
     def splitting(self):
         logger.info("splitting...")
         encoder_states = self.precompute(id=None)
-        #feats, points, values , label0, label1 = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb'], encoder_states['voxel_vertex_label0'], encoder_states['voxel_vertex_label1']
-        #new_points, new_feats, new_values, new_keys ,new_label0 , new_label1 = splitting_points(points, feats, values, self.voxel_size / 2.0, label0, label1)
+        feats, points, values , label0, label1 = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb'], encoder_states['voxel_vertex_label0'], encoder_states['voxel_vertex_label1']
+        new_points, new_feats, new_values, new_keys ,new_label0 , new_label1 = splitting_points(points, feats, values, self.voxel_size / 2.0, label0, label1)
 
-        feats, points, values = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb'] #, encoder_states['voxel_vertex_label0'], encoder_states['voxel_vertex_label1']
-        new_points, new_feats, new_values, new_keys = splitting_points(points, feats, values, self.voxel_size / 2.0)
+        #feats, points, values = encoder_states['voxel_vertex_idx'], encoder_states['voxel_center_xyz'], encoder_states['voxel_vertex_emb'] #, encoder_states['voxel_vertex_label0'], encoder_states['voxel_vertex_label1']
+        #new_points, new_feats, new_values, new_keys = splitting_points(points, feats, values, self.voxel_size / 2.0)
         new_num_keys = new_keys.size(0)
         new_point_length = new_points.size(0)        
         # set new voxel embeddings
@@ -864,8 +864,8 @@ class SparseVoxelEncoder(Encoder):
 
         self.points = new_points
         self.feats = new_feats
-        #self.pointlabel0 = new_label0
-        #self.pointlabel1 = new_label1
+        self.pointlabel0 = new_label0
+        self.pointlabel1 = new_label1
         #self.pointcolors = self.pointcol            
         #print('pointspecial: ',self.pointcol.shape,self.pointcolors.shape, self.points.shape)
         #self.pointcol = None
