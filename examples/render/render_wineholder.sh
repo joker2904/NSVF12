@@ -5,7 +5,7 @@
 
 # just for debugging
 DATA="Wineholder"
-RES="200x200"
+RES="50x50"
 ARCH="nsvf_base"
 SUFFIX="v1"
 DATASET=/tmp/roy0/mountpoint/Dataset/${DATA}

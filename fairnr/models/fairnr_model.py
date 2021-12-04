@@ -282,7 +282,7 @@ class BaseModel(BaseFairseqModel):
             val = self.encoder.white_color_separate(colpoints)
             #val = self.encoder.segment_sematic(val)
             #val = self.encoder.segment_sematic_3label(val)
-            print('final colored points :',val.shape,colpoints.shape)
+            #print('final colored points :',val.shape,colpoints.shape)
             images['{}_point/{}:pointcloud'.format(name, img_id)] = {
                  'img': val,   # XYZRGB
                  'raw': True }

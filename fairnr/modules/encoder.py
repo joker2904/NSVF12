@@ -314,7 +314,7 @@ class SparseVoxelEncoder(Encoder):
             self.values = shared_values
 
     def upgrade_state_dict_named(self, state_dict, name):
-        print('entered upgrade_state_dict_named')
+        #print('entered upgrade_state_dict_named')
         # update the voxel embedding shapes
         if self.values is not None:
             loaded_values = state_dict[name + '.values.weight']
@@ -393,7 +393,7 @@ class SparseVoxelEncoder(Encoder):
         label1 = self.pointlabel1[self.keep.bool()]
         points[:, 0] += (self.voxel_size / 10)
         values = self.values.weight[: self.num_keys] if self.values is not None else None
-        print('labels :',points.shape,label0.shape,label1.shape)
+        #print('labels :',points.shape,label0.shape,label1.shape)
         if id is not None:
             # extend size to support multi-objects
             feats  = feats.unsqueeze(0).expand(id.size(0), *feats.size()).contiguous()
@@ -476,7 +476,7 @@ class SparseVoxelEncoder(Encoder):
         voxel_pts = self.points[self.keep.bool()]
         self.prune_voxel_semantic()
         voxel_colors = self.pointcolors  #[self.keep.bool()]
-        print(voxel_colors,voxel_colors.shape,voxel_idx.shape,voxel_pts.shape)
+        #print(voxel_colors,voxel_colors.shape,voxel_idx.shape,voxel_pts.shape)
 
         '''
         points = [
@@ -670,13 +670,13 @@ class SparseVoxelEncoder(Encoder):
         count = 0
         count2 = 0
         for i in range(0,points.shape[0]):
-            print('~~~~~~~~~~~~~~',i,'~~~~~~~~~~~~~~~~')
+            #print('~~~~~~~~~~~~~~',i,'~~~~~~~~~~~~~~~~')
             temp1 = colorvoxel[(voxels[:, None] == points[i,:]).all(-1).any(-1),:]
             if temp1.shape[0] > 0:
                 count = count + 1
                 count2 = count2 + temp1.shape[0]
-            print(temp1,temp1.shape,points[i,:])
-        print('Count = ',count,count2)
+            #print(temp1,temp1.shape,points[i,:])
+        #print('Count = ',count,count2)
 
     @torch.no_grad()
     def majority_voting_pointscolor(self, voxels, colors,min):
@@ -694,7 +694,7 @@ class SparseVoxelEncoder(Encoder):
             self.pointcol = val
         else:
             self.pointcol = torch.cat((self.pointcol,val),axis=0)
-        print(self.pointcol.shape,colorvoxel.shape,voxels.shape,colors.shape)
+        #print(self.pointcol.shape,colorvoxel.shape,voxels.shape,colors.shape)
 
     @torch.no_grad()
     def white_color_separate(self, voxelcolor):
@@ -707,14 +707,14 @@ class SparseVoxelEncoder(Encoder):
         q = ~(colors[:, None] < lower).all(-1).any(-1)
         r = p * q        
         final = voxelcolor[r,:]
-        print('tempcolor--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
+        #print('tempcolor--->',final.shape,torch.max(voxelcolor), torch.min(voxelcolor) ) 
         #print(colors)
         return final
 
     @torch.no_grad()
     def segment_sematic(self, voxelcolor):
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
-        print('semantic segmentation entered')
+        #print('semantic segmentation entered')
         upper = torch.tensor([[0.0,130.0,0.0]])
         lower = torch.tensor([[0.0,125.0,0.0]])
         plabel = torch.tensor([[1.0,0.0,0.0]])
@@ -739,7 +739,7 @@ class SparseVoxelEncoder(Encoder):
     @torch.no_grad()
     def segment_sematic_3label(self, voxelcolor):
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
-        print('semantic segmentation entered')
+        #print('semantic segmentation entered')
         upper = torch.tensor([[30.0,30.0,30.0]])
         lower = torch.tensor([[10.0,10.0,10.0]])
         plabel = torch.tensor([[1.0,0.0,0.0]])
