@@ -1,0 +1,115 @@
+ (reader): ImageReader()
+  (encoder): SparseVoxelEncoder(
+    (values): Embedding(1170, 32)
+  )
+  (field): RaidanceField(
+    (bg_color): BackgroundField()
+    (den_filters): ModuleDict(
+      (emb): NeRFPosEmbLinear(Cat(Sinusoidal (in=32, out=384, angular=False), 32))
+    )
+    (tex_filters): ModuleDict(
+      (feat): Identity()
+      (ray): NeRFPosEmbLinear(Sinusoidal (in=3, out=24, angular=True))
+    )
+    (feature_field): ImplicitField(
+      (net): ModuleList(
+        (0): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=416, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (1): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (2): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+      )
+    )
+    (predictor): SignedDistanceField(
+      (hidden_layer): FCLayer(
+        (net): Sequential(
+          (0): Linear(in_features=256, out_features=128, bias=True)
+          (1): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+          (2): ReLU()
+        )
+      )
+      (output_layer): Linear(in_features=128, out_features=1, bias=True)
+    )
+    (renderer): TextureField(
+      (net): ModuleList(
+        (0): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=280, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (1): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (2): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (3): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (4): Linear(in_features=256, out_features=3, bias=True)
+      )
+    )
+    (semantic_learner): SemanticTextureField(      
+        (0): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=280, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (1): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (2): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (3): FCLayer(
+          (net): Sequential(
+            (0): Linear(in_features=256, out_features=256, bias=True)
+            (1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+            (2): ReLU()
+          )
+        )
+        (4): Linear(in_features=256, out_features=3, bias=True)      
+    )
+  )
+  (raymarcher): VolumeRenderer()
+)
